@@ -35,7 +35,7 @@ function Quest()
                 Reward = quest2.Reward;
                 RankRequirement = quest1.RankRequirement;
             }
-            
+            wait()
             game:GetService("ReplicatedStorage")["Quest Remote Events"].EnableQuest:FireServer(lol)
         end
     end)
