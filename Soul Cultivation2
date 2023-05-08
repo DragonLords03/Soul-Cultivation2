@@ -4,6 +4,7 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
    wait(1)
    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
+
 getgenv().AutoQuest = false;
 getgenv().autoplatform = false;
 getgenv().AutoGinseng = false;
@@ -13,6 +14,15 @@ wait_time = nil
 
 local ts = game:GetService("TweenService")
 
+local function Tween(part, endpos, speed)
+    if part and endpos then
+        local Time = 0.50
+        local Info = TweenInfo.new(Time, Enum.EasingStyle.Linear)
+        local Tween = ts:Create(part,Info,{CFrame = CFrame.new(endpos.X,endpos.Y,endpos.Z)})
+        Tween:Play()
+        wait(Time)
+    end
+end
 local function Tween2(part, endpos, speed)
     if part and endpos then
         local Time2 = 5
@@ -35,14 +45,45 @@ function Quest()
                 Reward = quest2.Reward;
                 RankRequirement = quest1.RankRequirement;
             }
-            wait()
+            
             game:GetService("ReplicatedStorage")["Quest Remote Events"].EnableQuest:FireServer(lol)
+
+            Tween(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(-2261.49, 83.5238, 3993.08), 5)
+            wait(1.05)
+            
+            local quest1 = workspace["Quest NPCS"]["Xavier - Quest"]:FindFirstChild("Quest", 1)
+            local quest2 = workspace["Quest NPCS"].Angel:FindFirstChild("Quest", 1)
+            local lol = {
+                EnemyName = quest1.EnemyName;
+                EnemyAmount = quest2.EnemyAmount;
+                Reward = quest2.Reward;
+                RankRequirement = quest1.RankRequirement;
+            }
+            game:GetService("ReplicatedStorage")["Quest Remote Events"].EnableQuest:FireServer(lol)
+            Tween(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(90.0035, 71, -482.088), 5)
+            wait(1.05)
+
+            local quest1 = workspace["Quest NPCS"]["Brickman - Quest"]:FindFirstChild("Quest", 1)
+            local quest2 = workspace["Quest NPCS"].Angel:FindFirstChild("Quest", 1)
+            local lol = {
+                EnemyName = quest1.EnemyName;
+                EnemyAmount = quest2.EnemyAmount;
+                Reward = quest2.Reward;
+                RankRequirement = quest1.RankRequirement;
+            }
+            game:GetService("ReplicatedStorage")["Quest Remote Events"].EnableQuest:FireServer(lol)
+            Tween(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(337.758, 70.9062, -329.775), 5)
+            wait(1.05)
+            Tween(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(483.497, 42.7371, -506.837), 5)
+            wait(1.05)
         end
     end)
 end
 
 function Load()
     Tween2(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(5808.11, 812.955, -1702.65), 5)
+    wait(1)
+    Tween2(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(221.562, 71, -429.582), 5)
 end
 
 function Ginseng()
@@ -131,7 +172,24 @@ function YinYang()
     end)
 end
 
-local library = loadstring(httpget(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
+function Platform()
+    spawn(function()
+        local Part = Instance.new("Part", workspace)
+        while autoplatform == true do
+            Part.Anchored = true
+            Part.Size = Vector3.new(10, .001, 10)
+            while autoplatform do
+                wait()
+            Part.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -3.02, 0)
+              if autoplatform == false then
+                game:GetService("Workspace").Part:Destroy()
+              end
+            end
+        end
+    end)
+end
+
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
 
 local w = library:CreateWindow("Soul Cultivation")
 
