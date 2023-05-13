@@ -89,13 +89,14 @@ end
 function Ginseng()
     spawn(function()
         while AutoGinseng == true do
-            for i,v in pairs (game.Workspace.Areas["Forest Of Dao"].Ginseng:GetChildren()) do
-            if AutoGinseng == false then break end
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
-            wait(0.3)
-            local args = { v, "Ginseng" }
-            game:GetService("ReplicatedStorage").Harvest.Harvest:FireServer(unpack(args))
-            wait(wait_time) 
+            for i, v in pairs(game.Workspace.Areas["Forest Of Dao"].Ginseng:GetChildren()) do
+                if AutoGinseng == false then break end
+                Tween(game.Players.LocalPlayer.Character.HumanoidRootPart, v.CFrame.p, 0.5)
+                wait(0.3)
+                local args = { v, "Ginseng" }
+                wait(0.3)
+                game:GetService("ReplicatedStorage").Harvest.Harvest:FireServer(unpack(args))
+                wait(wait_time+0.3) 
             end
         end
     end)
@@ -137,17 +138,18 @@ function YinYang()
             end
             for i = 2, 6 do
                 if AutoYinYang == false then break end
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Areas["Demon Pelago"]["XiaoRed" .. i].Plant.CFrame
+                local plant = workspace.Areas["Demon Pelago"]["XiaoRed" .. i].Plant
+                Tween(game.Players.LocalPlayer.Character.HumanoidRootPart, plant.CFrame, 0.3)
                 wait(0.3)
-                local args = {[1] = workspace.Areas:FindFirstChild("Demon Pelago")["XiaoRed" .. i].Plant,[2] = "Divine Yang Fruit"}
+                local args = {[1] = plant, [2] = "Divine Yang Fruit"}
                 game:GetService("ReplicatedStorage").Harvest.Harvest:FireServer(unpack(args))
                 wait(wait_time) 
             end
-                for k, v in pairs(workspace.Areas["Demon Pelago"]:GetChildren()) do
-                    if v.Name == "Divine Yang Tree" then
-                        v.Name = "XiaoRed" .. k
-                    end
+            for k, v in pairs(workspace.Areas["Demon Pelago"]:GetChildren()) do
+                if v.Name == "Divine Yang Tree" then
+                    v.Name = "XiaoRed" .. k
                 end
+            end
             wait()
             for k, v in pairs(workspace.Areas["White Pelago"]:GetChildren()) do
                 if v.Name == "Divine Yang Tree" then
@@ -156,17 +158,18 @@ function YinYang()
             end
             for i = 2, 6 do
                 if AutoYinYang == false then break end
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Areas["White Pelago"]["XiaoBlue" .. i].Plant.CFrame
+                local plant = workspace.Areas["White Pelago"]["XiaoBlue" .. i].Plant
+                Tween(game.Players.LocalPlayer.Character.HumanoidRootPart, plant.CFrame, 0.3)
                 wait(0.3)
-                local args = {[1] = workspace.Areas:FindFirstChild("White Pelago")["XiaoBlue" .. i].Plant,[2] = "Divine Yin Fruit"}
+                local args = {[1] = plant, [2] = "Divine Yin Fruit"}
                 game:GetService("ReplicatedStorage").Harvest.Harvest:FireServer(unpack(args))
                 wait(wait_time)
             end              
-                for k, v in pairs(workspace.Areas["White Pelago"]:GetChildren()) do
-                    if v.Name == "Divine Yang Tree" then
-                        v.Name = "XiaoBlue" .. k
-                    end
+            for k, v in pairs(workspace.Areas["White Pelago"]:GetChildren()) do
+                if v.Name == "Divine Yang Tree" then
+                    v.Name = "XiaoBlue" .. k
                 end
+            end
             wait()
         end
     end)
