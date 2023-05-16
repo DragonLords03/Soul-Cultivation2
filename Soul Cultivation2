@@ -10,13 +10,14 @@ getgenv().autoplatform = false;
 getgenv().AutoGinseng = false;
 getgenv().AutoYinYang = false;
 getgenv().AutoLotus = false;
+getgenv().AutoMoon = false;
 wait_time = nil
 
 local ts = game:GetService("TweenService")
 
 local function Tween(part, endpos, speed)
     if part and endpos then
-        local Time = 0.8
+        local Time = 0.80
         local Info = TweenInfo.new(Time, Enum.EasingStyle.Linear)
         local Tween = ts:Create(part,Info,{CFrame = CFrame.new(endpos.X,endpos.Y,endpos.Z)})
         Tween:Play()
@@ -25,14 +26,19 @@ local function Tween(part, endpos, speed)
 end
 local function Tween2(part, endpos, speed)
     if part and endpos then
-        local Time2 = 5
-        local Info2 = TweenInfo.new(Time2, Enum.EasingStyle.Linear)
-        local Tween2 = ts:Create(part,Info2,{CFrame = CFrame.new(endpos.X,endpos.Y,endpos.Z)})
-        Tween2:Play()
-        wait(Time2)
+        local Time = 7.5
+        local Info = TweenInfo.new(Time, Enum.EasingStyle.Linear)
+        local Tween = ts:Create(part,Info,{CFrame = CFrame.new(endpos.X,endpos.Y,endpos.Z)})
+        Tween:Play()
+        wait(Time)
     end
 end
 
+function LoadQ()
+    Tween2(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(5808.11, 812.955, -1702.65), 5)
+    wait(1)
+    Tween2(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(221.562, 71, -429.582), 5)
+end
 function Quest()
     spawn(function()
         while AutoQuest do
@@ -80,12 +86,9 @@ function Quest()
     end)
 end
 
-function Load()
-    Tween2(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(5808.11, 812.955, -1702.65), 5)
-    wait(1)
-    Tween2(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(221.562, 71, -429.582), 5)
+function LoadG()
+    Tween2(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(2251, 80, 1708), 5)
 end
-
 function Ginseng()
     spawn(function()
         while AutoGinseng == true do
@@ -94,14 +97,16 @@ function Ginseng()
                 Tween(game.Players.LocalPlayer.Character.HumanoidRootPart, v.CFrame.p, 0.5)
                 wait(0.3)
                 local args = { v, "Ginseng" }
-                wait(0.3)
                 game:GetService("ReplicatedStorage").Harvest.Harvest:FireServer(unpack(args))
-                wait(wait_time+0.3) 
+                wait(wait_time) 
             end
         end
     end)
 end
 
+function LoadL()
+    Tween2(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(3009, 76, 3681), 5)
+end
 function Lotus()
     spawn(function()
         while AutoLotus == true do
@@ -128,6 +133,9 @@ function Lotus()
     end)
 end
 
+function LoadY()
+    Tween2(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(2547, 80, 3907), 5)
+end
 function YinYang()
     spawn(function()
         while AutoYinYang == true do
@@ -175,6 +183,34 @@ function YinYang()
     end)
 end
 
+function LoadM()
+    Tween2(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(6026, 35, 6013), 5)
+end
+
+function Moon()
+    spawn(function()
+        local counter = 1
+        while AutoMoon == true do
+            local ginsengPlants = workspace:GetChildren()
+            for k, v in pairs(ginsengPlants) do
+                if v.Name == "MoonFlower Grass" then
+                    v.Name = "MoonieChan" .. counter
+                    counter = counter + 1
+                end
+            end
+            for i = 1, 17 do
+                if AutoMoon == false then break end
+                local mooniechannnn = workspace["MoonieChan" .. i]
+                Tween(game.Players.LocalPlayer.Character.HumanoidRootPart, mooniechannnn.CFrame, 0.3)
+                wait(0.3)
+                local args = { mooniechannnn, "Moon Flower" }
+                game:GetService("ReplicatedStorage").Harvest.Harvest:FireServer(unpack(args))
+                wait(wait_time)
+            end
+        end
+    end)
+end
+
 function Platform()
     spawn(function()
         local Part = Instance.new("Part", workspace)
@@ -194,18 +230,23 @@ end
 
 local library = loadstring(httpget(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
 
-local w = library:CreateWindow("Soul Cultivation")
+local w = library:CreateWindow("Farm")
 
-local b = w:CreateFolder("Quest")
+local x = library:CreateWindow("Harvest")
 
-local c = w:CreateFolder("Auto Harvest")
+local a = w:CreateFolder("Quest")
 
-local d = w:CreateFolder("Create Platform")
+local b = w:CreateFolder("Create Platform")
 
-local e = w:CreateFolder("Credit")
+local c = w:CreateFolder("Credit")
+
+local d = x:CreateFolder("Auto Harvest")
 
 
-b:Toggle("Auto Quest",function(bool)
+a:Button("Load",function()
+    LoadQ();
+end)
+a:Toggle("Auto Quest",function(bool)
     getgenv().AutoQuest = bool
     print(': ', bool)
     if bool then
@@ -213,19 +254,8 @@ b:Toggle("Auto Quest",function(bool)
     end
 end)
 
-b:Button("Load",function()
-    Load();
-end)
-
-c:Label("Harvesting Speed",{
-    TextSize = 25;
-    TextColor = Color3.fromRGB(255,255,255);
-    BgColor = Color3.fromRGB(69,69,69);
-    
-}) 
-
-c:Slider("wait time",{
-    min = 0; 
+d:Slider("wait time",{
+    min = 2; 
     max = 10; 
     precise = true; 
 },function(value)
@@ -233,21 +263,10 @@ c:Slider("wait time",{
     print(': ', value)
 end)
 
-c:Label("NEED TO BE IN",{
-    TextSize = 18;
-    TextColor = Color3.fromRGB(255,0,0);
-    BgColor = Color3.fromRGB(69,69,69);
-    
-}) 
-
-c:Label("Forest of Dao",{
-    TextSize = 25;
-    TextColor = Color3.fromRGB(255,255,255);
-    BgColor = Color3.fromRGB(69,69,69);
-    
-}) 
-
-c:Toggle("Auto Ginseng",function(bool)
+d:Button("Load",function()
+    LoadG();
+end)
+d:Toggle("Auto Ginseng",function(bool)
     getgenv().AutoGinseng = bool
     print(': ', bool)
     if bool then
@@ -255,43 +274,10 @@ c:Toggle("Auto Ginseng",function(bool)
     end
 end)
 
-c:Label("NEED TO BE IN",{
-    TextSize = 18;
-    TextColor = Color3.fromRGB(255,0,0);
-    BgColor = Color3.fromRGB(69,69,69);
-    
-}) 
-
-c:Label("Yin Archipelago left side",{
-    TextSize = 20;
-    TextColor = Color3.fromRGB(255,255,255);
-    BgColor = Color3.fromRGB(69,69,69);
-    
-}) 
-
-c:Toggle("Auto lotus",function(bool)
-    getgenv().AutoLotus = bool
-    print(': ', bool)
-    if bool then
-        Lotus();
-    end
+d:Button("Load",function()
+    LoadY();
 end)
-
-c:Label("NEED TO BE IN",{
-    TextSize = 18;
-    TextColor = Color3.fromRGB(255,0,0);
-    BgColor = Color3.fromRGB(69,69,69);
-    
-}) 
-
-c:Label("Yin Archipelago right side",{
-    TextSize = 18;
-    TextColor = Color3.fromRGB(255,255,255);
-    BgColor = Color3.fromRGB(69,69,69);
-    
-}) 
-
-c:Toggle("Auto Yin and Yang",function(bool)
+d:Toggle("Auto Yin and Yang",function(bool)
     getgenv().AutoYinYang = bool
     print(': ', bool)
     if bool then
@@ -299,7 +285,29 @@ c:Toggle("Auto Yin and Yang",function(bool)
     end
 end)
 
-d:Toggle("Auto Platform",function(bool)
+d:Button("Load",function()
+    LoadM();
+end)
+d:Toggle("Auto Moon Flower",function(bool)
+    getgenv().AutoMoon = bool
+    print(': ', bool)
+    if bool then
+        Moon();
+    end
+end)
+
+d:Button("Load",function()
+    LoadL();
+end)
+d:Toggle("Auto lotus",function(bool)
+    getgenv().AutoLotus = bool
+    print(': ', bool)
+    if bool then
+        Lotus();
+    end
+end)
+
+b:Toggle("Auto Platform",function(bool)
     getgenv().autoplatform = bool
     print(': ', bool)
     if bool then
@@ -307,7 +315,7 @@ d:Toggle("Auto Platform",function(bool)
     end
 end)
 
-e:Label("Demon Immortel",{
+c:Label("Demon Immortel",{
     TextSize = 25;
     TextColor = Color3.fromRGB(255,255,255);
     BgColor = Color3.fromRGB(69,69,69);
