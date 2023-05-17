@@ -11,7 +11,8 @@ getgenv().AutoGinseng = false;
 getgenv().AutoYinYang = false;
 getgenv().AutoLotus = false;
 getgenv().AutoMoon = false;
-wait_time = nil
+getgenv().AutoInsight = false;
+wait_time = 2
 
 local ts = game:GetService("TweenService")
 
@@ -211,6 +212,28 @@ function Moon()
     end)
 end
 
+function LoadI()
+    Tween2(game.Players.LocalPlayer.Character.HumanoidRootPart, Vector3.new(-2954, 75, 4521), 5)
+end
+function Insight()
+    spawn(function()
+        while AutoInsight == true do
+            for k, v in pairs(game.Workspace.Areas["Space-Crack"]:GetChildren()) do
+                if Autoinsight == false then break end
+                a = 0
+                Tween(game.Players.LocalPlayer.Character.HumanoidRootPart, v.CFrame.p + Vector3.new(0, 8, 0), 0.3 )
+                wait(0.3)
+                local args = { v, "InsightFruit"}
+                game:GetService("ReplicatedStorage").Harvest.Harvest:FireServer(unpack(args))
+                repeat
+                    Tween(game.Players.LocalPlayer.Character.HumanoidRootPart, v.CFrame.p + Vector3.new(0, 8, 0), 0.3 )
+                    a = a + 1
+                until a == 3
+            end
+        end
+    end)
+end
+
 function Platform()
     spawn(function()
         local Part = Instance.new("Part", workspace)
@@ -254,15 +277,6 @@ a:Toggle("Auto Quest",function(bool)
     end
 end)
 
-d:Slider("wait time",{
-    min = 2; 
-    max = 10; 
-    precise = true; 
-},function(value)
-    wait_time = value
-    print(': ', value)
-end)
-
 d:Button("Load",function()
     LoadG();
 end)
@@ -304,6 +318,17 @@ d:Toggle("Auto lotus",function(bool)
     print(': ', bool)
     if bool then
         Lotus();
+    end
+end)
+
+d:Button("Load Insight",function()
+    LoadI();
+end)
+d:Toggle("Insight Fruit",function(bool)
+    getgenv().AutoInsight = bool
+    print(': ', bool)
+    if bool then
+        Insight();
     end
 end)
 
