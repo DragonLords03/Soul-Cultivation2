@@ -12,7 +12,7 @@ getgenv().AutoYinYang = false;
 getgenv().AutoLotus = false;
 getgenv().AutoMoon = false;
 getgenv().AutoInsight = false;
-wait_time = 2
+wait_time = nil
 
 local ts = game:GetService("TweenService")
 
@@ -279,6 +279,15 @@ a:Toggle("Auto Quest",function(bool)
     if bool then
         Quest();
     end
+end)
+
+d:Slider("wait time",{
+    min = 2; 
+    max = 10; 
+    precise = true; 
+},function(value)
+    wait_time = value
+    print(': ', value)
 end)
 
 d:Button("Load",function()
